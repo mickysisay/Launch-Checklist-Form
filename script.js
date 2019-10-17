@@ -1,9 +1,24 @@
 // Write your JavaScript code here!
 window.onload = function (){
   let submitButton = document.getElementById('formSubmit');
-  
+  document.getElementById("missionTarget").innerHTML ='';
+   fetch("https://handlers.education.launchcode.org/static/planets.json").then((res)=>{
+      res.json().then((data)=>{
+         console.log(data);
+       let myJson = data[Math.floor(Math.random()*6)];
+       document.getElementById("missionTarget").innerHTML = `<h2>Mission Destination</h2>
+       <ol>
+          <li>Name: ${myJson.name}</li>
+          <li>Diameter: ${myJson.diameter}</li>
+          <li>Star: ${myJson.star}</li>
+          <li>Distance from Earth: ${myJson.distance}</li>
+          <li>Number of Moons: ${myJson.moons}</li>
+       </ol>
+       <img src="${myJson.image}">`;
+      });
+     });
   submitButton.addEventListener('click',(e)=>{
-   document.getElementById("missionTarget").innerHTML ='';
+   
    let hasPassedEverything =true;
    let all = document.querySelectorAll("input");
    for(let i=0;i<all.length;i++){
@@ -50,21 +65,7 @@ window.onload = function (){
      document.getElementById("cargoStatus").innerHTML = "Cargo weight low enough for launch";
       document.getElementById("launchStatus").innerHTML = "Shuttle is ready for launch";
       document.getElementById("fuelStatus").innerHTML = "Fuel level high enough for launch";
-    fetch("https://handlers.education.launchcode.org/static/planets.json").then((res)=>{
-       res.json().then((data)=>{
-          console.log(data);
-        let myJson = data[Math.floor(Math.random()*6)];
-        document.getElementById("missionTarget").innerHTML = `<h2>Mission Destination</h2>
-        <ol>
-           <li>Name: ${myJson.name}</li>
-           <li>Diameter: ${myJson.diameter}</li>
-           <li>Star: ${myJson.star}</li>
-           <li>Distance from Earth: ${myJson.distance}</li>
-           <li>Number of Moons: ${myJson.moons}</li>
-        </ol>
-        <img src="${myJson.image}">`;
-       });
-      });
+   
    }}
    
   
